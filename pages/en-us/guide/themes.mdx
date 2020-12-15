@@ -1,0 +1,165 @@
+import Layout from 'lib/components/layout'
+import { Note, Code, Spacer, Link } from 'components'
+
+export const meta = {
+  title: 'Themes',
+  group: 'customization',
+}
+
+## Themes
+
+`@geist-ui/react` now support **Dark Mode**. You can switch theme at any time through a very simple API, no third-party styles or configs.
+
+<Spacer y={2} />
+
+### Switch themes
+
+<Note>
+  Before using any Components, you must add <Code>GeistProvider</Code> to the root node.
+</Note>
+<Spacer y={0.5} />
+<Note type="success">
+  <Code>CssBaseline</Code> provides basic CSS support, which is similar to <Code>normalize</Code>.
+</Note>
+<Spacer y={1} />
+
+**Now you can change the theme as follows:**
+
+1. Make sure `GeistProvider` and `CssBaseline` are already on the root component.
+
+2. Get the current theme of the page through hook `useTheme`.
+
+3. Update the value of `theme.type`, and the theme of all components will follow automatically.
+
+```jsx
+import { CssBaseline, GeistProvider } from '@geist-ui/react'
+
+const App = () => {
+  const [themeType, setThemeType] = useState('dark')
+  const switchThemes = () => {
+    setThemeType(lastThemeType => (lastThemeType === 'dark' ? 'light' : 'dark'))
+  }
+  return (
+    <GeistProvider theme={{ type: themeType }}>
+      <CssBaseline />
+      <YourComponent onClick={switchThemes} />
+    </GeistProvider>
+  )
+}
+```
+
+<Spacer y={3} />
+
+### Customizing theme
+
+Customizing a theme is very simple in `@geist-ui/react`, you just need to provide a new theme `Object`,
+and all the components will change automatically.
+Here is <Link target="_blank" color href="https://github.com/geist-org/react/tree/master/examples/custom-themes">a complete sample project</Link> for reference.
+
+Of course, if a _component_ doesn't use your customized variables, it doesn't make any additional **changes** or **rendering**.
+
+<Spacer y={1} />
+<Note type="warning">
+  The more changes you customise, the more Components will <b>Re-Render</b>.
+</Note>
+
+```jsx
+import { CssBaseline, GeistProvider } from '@geist-ui/react'
+
+const myTheme = {
+  palette: {
+    success: '#000',
+  },
+}
+
+const App = () => (
+  <GeistProvider theme={myTheme}>
+    <CssBaseline />
+    <YourAppComponent onClick={switchThemes} />
+  </GeistProvider>
+)
+```
+
+<Spacer y={3} />
+
+### View all types of Theme definitions
+
+If you are using TypeScript, you can import various preset types:
+
+```ts
+import {
+  GeistUIThemes,
+  GeistUIThemesFont,
+  GeistUIThemesPalette,
+  GeistUIThemesExpressiveness,
+  GeistUIThemesLayout,
+} from '@geist-ui/react'
+
+// usage:
+const myStyles: GeistUIThemes = {
+  /* ... */
+}
+const myPalette: Partial<GeistUIThemesPalette> = {
+  /* ... */
+}
+```
+
+If you don't use TypeScript, to learn more about preset types, see <Link color target="_blank" href="https://github.com/geist-org/react/blob/master/components/styles/themes/index.ts">here</Link>.
+
+<Spacer y={3} />
+
+### Customizing components
+
+#### Overriding styles with `className`
+
+You can override the style by defining a `className` on the component.
+
+```jsx
+import { Button, Row } from '@geist-ui/react'
+
+const MyPage = () => (
+  <Row>
+    <Button className="page-button">Click me!</Button>
+  </Row>
+)
+
+// in css file:
+.page-button {
+  padding: 0;
+}
+```
+
+<Spacer y={2} />
+
+#### Overriding styles with `inline-style`
+
+Defining an `inline-style` will also correctly override the component.
+
+```jsx
+const MyPage = () => (
+  <Row>
+    <Button style={{ margin: '20px' }}>Click me!</Button>
+  </Row>
+)
+```
+
+<Spacer y={2} />
+
+#### Build your own Components with `theme`
+
+Sometimes you want to create new components, but you want to be consistent with the current theme. Now you can try using **theme variables** in your components
+
+```jsx
+import { useTheme } from '@geist-ui/react'
+
+const MyComponent = () => {
+  const theme = useTheme()
+  return (
+    <div style={{ color: theme.palette.success }}>
+      <span>hello world!</span>
+    </div>
+  )
+}
+```
+
+export default ({ children }) => <Layout meta={meta}>{children}</Layout>

@@ -1,0 +1,79 @@
+import Layout from 'lib/components/layout'
+import { Note, Code, Spacer, Link, Display } from 'components'
+import NextLink from 'next/link'
+import Colors from 'lib/components/displays/colors'
+
+export const meta = {
+  title: 'Colors',
+  group: 'customization',
+}
+
+## Colors
+
+Default colors for themes.
+
+<Spacer y={2} />
+
+### PRIMARY
+
+You can use any color anywhere, all colors change with the theme.
+If you want to customize your colors, please read <NextLink href="/en-us/guide/themes"><Link color>Themes</Link></NextLink> to learn more.
+
+<Display width="90%" caption={<span>Get palette from <Code>useTheme</Code>.</span>}>
+
+```jsx
+import { useTheme } from '@geist-ui/react'
+
+const myComponent = () => {
+  const { palette } = useTheme()
+
+  return <p style={{ color: palette.accents_1 }}>myComponent</p>
+}
+```
+
+</Display>
+<Spacer y={1} />
+<Colors type="normal" />
+<Spacer y={3} />
+
+### STATUS
+
+Use different colors to express more emotional changes.
+
+### Success
+
+<Spacer y={0.75} />
+<Colors type="success" />
+<Spacer y={3} />
+
+### Error
+
+<Spacer y={0.75} />
+<Colors type="error" />
+<Spacer y={3} />
+
+### Warning
+
+<Spacer y={0.75} />
+<Colors type="warning" />
+<Spacer y={3} />
+
+### Cyan
+
+<Spacer y={0.75} />
+<Colors type="cyan" />
+<Spacer y={3} />
+
+### Violet
+
+<Spacer y={0.75} />
+<Colors type="violet" />
+<Spacer y={3} />
+
+### Highlight
+
+<Spacer y={0.75} />
+<Colors type="highlight" />
+<Spacer y={3} />
+
+export default ({ children }) => <Layout meta={meta}>{children}</Layout>
